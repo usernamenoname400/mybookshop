@@ -1,0 +1,67 @@
+
+<!--END-->
+<!--END--><!DOCTYPE html><!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<!--[if gt IE 9]><!--> <html  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName=#{topbar.cart})}"></head>
+<body class="Site">
+<!--if lt IE 8
+p.error-browser
+    | Ваш браузер&nbsp;
+    em устарел!&nbsp;
+    a(href="http://browsehappy.com/") Выберите новую версию
+        +s
+        | браузера здесь&nbsp;
+    | для правильного отображения сайта.
+-->
+<header th:replace="~{fragments/header_fragment :: headFragment}"></header>
+  <div class="Middle">
+    <div class="wrap">
+      <main class="Middle-main">
+        <h1 class="Middle-title" th:text="#{topbar.cart}">Корзина</h1>
+        <form class="form Cart" action="#" method="post">
+          <div th:replace="~{fragments/cart_fragments :: cartBooks(${cartBooks})}"></div>
+          <div class="Cart-total">
+            <div class="Cart-block Cart-block_total">
+              <strong class="Cart-title" th:text="#{cart.total}">Итого:</strong>
+              <span
+                      class="Cart-price"
+                      th:text="${'$' + #aggregates.sum(cartBooks.![T(Integer).parseInt(#strings.replace(price, '$', ''))])}"
+              >
+                534 р.
+              </span>
+              <span
+                      class="Cart-price_old"
+                      th:text="${'$' + #aggregates.sum(cartBooks.![T(Integer).parseInt(#strings.replace(priceOld, '$', ''))])}"
+              >
+                658 р.
+              </span>
+            </div>
+            <div class="Cart-block">
+              <a class="btn btn_success btn_md" href="/order.html" th:text="#{cart.order}">Купить</a>
+            </div>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+  <footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+  <!--+menu(-->
+  <!--    'Это раз',-->
+  <!--    'Это два',-->
+  <!--    'Это три'-->
+  <!--)-->
+  <!--br-->
+  <!--br-->
+  <!--+menu._vt-->
+  <!--    +menuItem Это раз-->
+  <!--    +menuItem.-item_danger Это два-->
+  <!--    +menuItem Это три-->
+</body></html>

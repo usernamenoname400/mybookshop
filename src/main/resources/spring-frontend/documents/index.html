@@ -1,0 +1,74 @@
+
+<!--END-->
+<!--END--><!DOCTYPE html><!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<!--[if gt IE 9]><!--> <html  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName=#{footer.documents})}"></head>
+<body class="Site">
+  <!--if lt IE 8
+  p.error-browser
+      | Ваш браузер&nbsp;
+      em устарел!&nbsp;
+      a(href="http://browsehappy.com/") Выберите новую версию
+          +s
+          | браузера здесь&nbsp;
+      | для правильного отображения сайта.
+  -->
+  <header th:replace="~{fragments/header_fragment :: headFragment}"></header>
+  <div class="Middle">
+    <div class="wrap">
+      <main class="Middle-main">
+        <h1 class="Middle-title" th:text="#{footer.documents}">Документы</h1>
+        <div class="Section">
+          <div class="Documents">
+            <div class="Documents-wrap">
+              <a class="Documents-item" href="/documents/slug.html" th:href="@{/documents/1}">
+                <div class="Documents-image">
+                    <img src="/assets/img/content/documents/1.jpg" alt="1.jpg"/>
+                </div>
+                <div class="Documents-content">
+                  <strong class="Documents-title">Публичная оферта</strong>
+                  <p>Согласно закону, публичная оферта – это предложение, которое, во-первых, адресовано неопределенному кругу лиц, во-вторых, содержит все существенные условия договора, и, в-третьих, достаточно определенно выражает намерение предприятия-оферента считать себя заключившим договор с любым
+                  </p>
+                  <p>Согласно закону, публичная оферта – это предложение, которое, во-первых, адресовано неопределенному кругу лиц, во-вторых, содержит все существенные условия договора, и, в-третьих, достаточно определенно выражает намерение предприятия-оферента считать себя заключившим договор с любым
+                  </p>
+                </div>
+              </a>
+              <a class="Documents-item" href="/documents/slug.html" th:href="@{/documents/2}">
+                <div class="Documents-image">
+                    <img src="/assets/img/content/documents/2.jpg" alt="2.jpg"/>
+                </div>
+                <div class="Documents-content">
+                  <strong class="Documents-title">Политика обработки персональных данных</strong>
+                  <p>Согласно закону, публичная оферта – это предложение, которое, во-первых, адресовано неопределенному кругу лиц, во-вторых, содержит все существенные условия договора, и, в-третьих, достаточно определенно выражает намерение предприятия-оферента считать себя заключившим договор с любым
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+  <!--+menu(
+  'Это раз',
+  'Это два',
+  'Это три'
+  )
+  
+  -->
+  <!--br-->
+  <!--br-->
+  <!--+menu._vt-->
+  <!--    +menuItem Это раз-->
+  <!--    +menuItem.-item_danger Это два-->
+  <!--    +menuItem Это три-->
+</body></html>

@@ -1,0 +1,46 @@
+
+<!--END-->
+<!--END--><!DOCTYPE html><!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<!--[if gt IE 9]><!--> <html  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName=${genre.name})}"></head>
+<body class="Site">
+  <!--if lt IE 8
+  p.error-browser
+      | Ваш браузер&nbsp;
+      em устарел!&nbsp;
+      a(href="http://browsehappy.com/") Выберите новую версию
+          +s
+          | браузера здесь&nbsp;
+      | для правильного отображения сайта.
+  -->
+  <header th:replace="~{fragments/header_fragment :: headFragment}"></header>
+  <div class="Middle">
+    <div class="wrap">
+      <main class="Middle-main">
+        <ul class="breadcrumbs">
+          <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}" th:text="#{topbar.main}">Главная</a></li>
+          <li class="breadcrumbs-item"><a href="/genres/index.html" th:href="@{/genres}" th:text="#{topbar.genres}">Жанры</a></li>
+          <li class="breadcrumbs-item" th:if="${genre.superGenre != ''}">
+            <a href="/genres/index.html" th:href="|@{/genres/super/}${genre.superId}" th:text="${genre.superGenre}">Легкое чтение</a>
+          </li>
+          <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${genre.name}">Детективы</span></li>
+        </ul>
+        <header class="Middle-header">
+          <h1 class="Middle-title" th:text="${genre.name}">Детективы</h1>
+        </header>
+        <div class="Section">
+          <div th:replace="~{fragments/cards_fragment :: cardsFragment (books=${booksGenre}, savePath=${false})}"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+</body></html>

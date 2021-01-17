@@ -1,0 +1,64 @@
+
+<!--END-->
+<!--END--><!DOCTYPE html><!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<!--[if gt IE 9]><!--> <html  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName=#{topbar.genres})}"></head>
+<body class="Site">
+  <!--if lt IE 8
+  p.error-browser
+      | Ваш браузер&nbsp;
+      em устарел!&nbsp;
+      a(href="http://browsehappy.com/") Выберите новую версию
+          +s
+          | браузера здесь&nbsp;
+      | для правильного отображения сайта.
+  -->
+  <header th:replace="~{fragments/header_fragment :: headFragment}"></header>
+  <div class="Middle">
+    <div class="wrap">
+      <main class="Middle-main">
+        <h1 class="Middle-title" th:text="#{topbar.genres}">Жанры</h1>
+        <div class="Section">
+          <div class="Tags Tags_genres">
+            <div class="Tags" th:each="superGenre : ${superGenres}">
+              <div class="Tags-title">
+                <div class="Tag">
+                  <a href="/genres/slug.html" th:href="${'/genres/super/' + superGenre.id}">
+                    <span th:text="${superGenre.name}">Лёгкое чтение</span>
+                    <span class="undefined-amount" th:text="${'(' + superGenre.bookCount + ')'}">(15638)</span>
+                  </a>
+                </div>
+              </div>
+              <div class="Tag" th:each="genre : ${genresMap.get(superGenre.id)}">
+                <a href="/genres/slug.html" th:href="${'/genres/' + genre.id}">
+                  <span th:text="${genre.name}">Фантастика</span>
+                  <span class="undefined-amount" th:text="${'(' + genre.bookCount + ')'}">(44333)</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+  <!--+menu(-->
+  <!--    'Это раз',-->
+  <!--    'Это два',-->
+  <!--    'Это три'-->
+  <!--)-->
+  <!--br-->
+  <!--br-->
+  <!--+menu._vt-->
+  <!--    +menuItem Это раз-->
+  <!--    +menuItem.-item_danger Это два-->
+  <!--    +menuItem Это три-->
+</body></html>

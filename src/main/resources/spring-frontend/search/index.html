@@ -1,0 +1,66 @@
+
+<!--END-->
+<!--END--><!DOCTYPE html><!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<!--[if gt IE 9]><!--> <html  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName=#{search.title})}"></head>
+<body class="Site">
+  <!--if lt IE 8
+  p.error-browser
+      | Ваш браузер&nbsp;
+      em устарел!&nbsp;
+      a(href="http://browsehappy.com/") Выберите новую версию
+          +s
+          | браузера здесь&nbsp;
+      | для правильного отображения сайта.
+  -->
+  <header th:replace="~{fragments/header_fragment :: headFragment}"></header>
+  <div class="Middle Middle_search">
+    <div class="wrap">
+      <main class="Middle-main">
+        <h1 class="Middle-title" th:text="#{search.title}">Поиск</h1>
+        <div class="Section">
+          <div class="search">
+            <form class="form form_search" action="#" method="post" data-searchlimit="20">
+              <input
+                      class="search-input"
+                      id="querypage"
+                      name="querypage"
+                      type="text"
+                      placeholder="Search over 30 million book titles"
+                      th:placeholder="#{topbar.searchplaceholder}"
+                      th:value="${search}"
+                      value="Техника"
+              />
+              <button
+                      class="search-button"
+                      type="submit"
+                      name="searchpage"
+                      id="searchpage"
+                      th:text="#{buttons.search}"
+              >
+                Поиск
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="Section Section_close">
+          <header class="Section-header" th:if="${booksSearch != null}">
+            <h2 class="Section-title Middle-searchHeader" th:text="#{search.resultcnt(${booksSearch.size()})}">Найдено 40 книг</h2>
+          </header>
+          <div
+                  th:if="${booksSearch != null}"
+                  th:replace="~{fragments/cards_fragment :: cardsFragment (books=${booksSearch}, savePath=${false})}"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+</body></html>

@@ -1,0 +1,74 @@
+
+<!--END-->
+<!--END--><!DOCTYPE html><!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<!--[if gt IE 9]><!--> <html  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName=${authorData.firsName + ' ' + authorData.lastName})}"></head>
+<body class="Site">
+<!--if lt IE 8
+p.error-browser
+    | Ваш браузер&nbsp;
+    em устарел!&nbsp;
+    a(href="http://browsehappy.com/") Выберите новую версию
+        +s
+        | браузера здесь&nbsp;
+    | для правильного отображения сайта.
+-->
+  <header th:replace="~{fragments/header_fragment :: headFragment}"></header>
+  <div class="Middle">
+    <div class="wrap">
+      <main class="Middle-main">
+        <ul class="breadcrumbs">
+          <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}" th:text="#{topbar.main}">Главная</a></li>
+          <li class="breadcrumbs-item"><a href="/authors/index.html" th:href="@{/authors}" th:text="#{topbar.authors}">Авторы</a></li>
+          <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${authorData.firsName + ' ' + authorData.lastName}">Борис Васильевич Бедный</span></li>
+        </ul>
+        <h1 class="Middle-title" th:text="${authorData.firsName + ' ' + authorData.lastName}">Борис Васильевич Бедный</h1>
+        <article class="Article">
+          <div class="sdf">
+          </div>
+          <div class="Spoiler">
+            <div class="Spoiler-visible">
+              <div class="pict pict_left"><img src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
+              </div>
+              <div>
+                <h2 th:text="#{author.biography}">Биография</h2>
+                <p th:text="${authorData.biographyShort}"></p>
+              </div>
+            </div>
+            <div class="Spoiler-hide">
+              <p th:text="${authorData.biographyRest}"></p>
+            </div>
+            <div class="Spoiler-footer">
+              <button
+                      class="Spoiler-trigger btn btn_primary btn_nr"
+                      type="button"
+                      th:data-showtext="#{buttons.showless}"
+                      data-showtext="Свернуть"
+                      th:data-hidetext="#{buttons.showmore}"
+                      data-hidetext="Показать полностью"
+              >
+              </button>
+            </div>
+          </div>
+        </article>
+        <div class="Section">
+          <div th:replace="~{fragments/carousel_fragment :: carouselFragment(books=${authorBooks}, title=#{author.books})}"></div>
+          <footer class="Section-footer">
+            <a class="Author-books" href="/books/author.html" th:href="|@{/books/author/}${authorData.id}|">
+              Все книги автора<span class="Author-amount" th:text="${'(' + authorBooks.size() + ')'}">(55)</span>
+            </a>
+          </footer>
+        </div>
+      </main>
+    </div>
+  </div>
+  <footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+</body></html>

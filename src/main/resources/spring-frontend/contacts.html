@@ -1,0 +1,122 @@
+
+<!--END-->
+<!--END--><!DOCTYPE html><!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<!--[if gt IE 9]><!--> <html  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName=#{footer.contacts})}"></head>
+<body class="Site">
+<!--if lt IE 8
+p.error-browser
+    | Ваш браузер&nbsp;
+    em устарел!&nbsp;
+    a(href="http://browsehappy.com/") Выберите новую версию
+        +s
+        | браузера здесь&nbsp;
+    | для правильного отображения сайта.
+-->
+  <header th:replace="~{fragments/header_fragment :: headFragment}"></header>
+  <div class="Middle">
+    <div class="Middle-top">
+      <div class="wrap">
+        <h1 class="Middle-title" th:text="#{footer.contacts}">Контакты</h1>
+      </div>
+    </div>
+    <div class="wrap">
+      <main class="Middle-main">
+        <ul class="breadcrumbs">
+          <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}" th:text="#{topbar.main}">Главная</a></li>
+          <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="#{footer.contacts}">Контакты</span></li>
+        </ul>
+        <div class="Contacts">
+          <div class="row">
+            <div class="row-block">
+              <h2 th:text="#{footer.contacts}">Контакты</h2>
+              <div class="Contacts-prop">
+                <strong class="Contacts-propTitle" th:text="#{contacts.phone}">Телефон:
+                </strong><span class="Contacts-propContent">8 (800) 484-48-48</span>
+              </div>
+              <div class="Contacts-prop">
+                <strong class="Contacts-propTitle" th:text="#{contacts.email}">E-mail:
+                </strong><span class="Contacts-propContent">test@test.ru</span>
+              </div>
+              <div class="Contacts-prop">
+                <strong class="Contacts-propTitle" th:text="#{contacts.telegram}">Телеграм-бот:
+                </strong><span class="Contacts-propContent">@testBookShop</span>
+              </div>
+            </div>
+            <div class="row-block">
+              <div class="Contacts-form">
+                <h2 th:text="#{contacts.writeus}">Напишите нам:</h2>
+                <form class="form" action="#" method="post">
+                  <div class="form-group">
+                    <input
+                            class="form-input"
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Введите Имя"
+                            th:placeholder="#{placeholders.name}"
+                            data-validate="require"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                            class="form-input form-input_mail"
+                            id="mail"
+                            name="mail"
+                            type="text"
+                            placeholder="Введите e-mail"
+                            th:placeholder="#{placeholders.email}"
+                            data-validate="mail require"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                            class="form-input"
+                            id="topic"
+                            name="topic"
+                            type="text"
+                            placeholder="Введите тему"
+                            th:placeholder="#{placeholders.subject}"
+                            data-validate="require"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <textarea
+                            class="form-textarea Contacts-message"
+                            name="message"
+                            id="message"
+                            placeholder="Введите сообщение"
+                            th:placeholder="#{placeholders.message}"
+                            data-validate="require"
+                    >
+                    </textarea>
+                  </div>
+                  <div class="form-group">
+                    <button
+                            class="btn btn_primary form-btn"
+                            type="submit"
+                            name="sendMessage"
+                            id="sendMessage"
+                            th:text="#{buttons.send}"
+                    >
+                      Отправить
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+</body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<body>
+<span th:fragment="star (isView)" th:attr="class=${isView ? 'Rating-star Rating-star_view' : 'Rating-star'}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+      <g>
+        <g>
+          <path fill="#ffc000" d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+          </path>
+        </g>
+      </g>
+    </svg>
+</span>
+<span class="Rating-stars" th:fragment="intStars(rating)">
+    <span th:replace="~{this :: star(isView=${rating > 0})}"></span>
+    <span th:replace="~{this :: star(isView=${rating > 1})}"></span>
+    <span th:replace="~{this :: star(isView=${rating > 2})}"></span>
+    <span th:replace="~{this :: star(isView=${rating > 3})}"></span>
+    <span th:replace="~{this :: star(isView=${rating > 4})}"></span>
+</span>
+<div class="Rating Rating_noStyleLink" th:fragment="ratingStars (rating, votes)">
+    <span th:replace="~{this :: intStars(${rating})}"></span>
+    <span class="Rating-title" th:text="${'(' + votes + ')'}"></span>
+</div>
+
+<div class="modal modal_compression modal_dropdown" th:fragment="ratingsModal(ratings)">
+    <div class="modal-window">
+        <a class="modal-close" href="#">
+            <span></span><span></span>
+        </a>
+        <strong class="modal-title">Распределение оценок</strong>
+        <div class="RatingGroup">
+          <span class="Rating">
+            <span th:replace="~{this :: intStars(5)}"></span>
+            <span class="Rating-title" th:text="${ratings.rating5}">1</span>
+          </span>
+          <br>
+          <span class="Rating">
+            <span th:replace="~{this :: intStars(4)}"></span>
+            <span class="Rating-title" th:text="${ratings.rating4}">1</span>
+          </span>
+          <br>
+          <span class="Rating">
+            <span th:replace="~{this :: intStars(3)}"></span>
+            <span class="Rating-title" th:text="${ratings.rating3}">1</span>
+          </span>
+          <br>
+          <span class="Rating">
+            <span th:replace="~{this :: intStars(2)}"></span>
+            <span class="Rating-title" th:text="${ratings.rating2}">1</span>
+          </span>
+          <br>
+          <span class="Rating">
+            <span th:replace="~{this :: intStars(1)}"></span>
+            <span class="Rating-title" th:text="${ratings.rating1}">1</span>
+          </span>
+        </div>
+    </div>
+</div>
+
+<div class="Comment-footer" th:fragment="commentFooter(likes, dislikes, withButton)">
+    <div class="Comment-appeal">
+        <button
+                class="btn btn_white btn_like"
+                data-btntype="check"
+                data-check="false"
+                data-btnradio="two2"
+                data-likeid="1111"
+        >
+            <span class="btn-icon">
+                <img src="/assets/img/icons/comment/like.svg" alt="like.svg"/>
+            </span>
+            <span class="btn-content" th:text="${likes}">200</span>
+        </button>
+        <button
+                class="btn btn_white btn_dislike"
+                data-btntype="check"
+                data-check="false"
+                data-btnradio="two2"
+                data-likeid="1111"
+        >
+            <span class="btn-icon">
+                <img src="/assets/img/icons/comment/dislike.svg" alt="dislike.svg"/>
+            </span>
+            <span class="btn-content" th:text="${dislikes}">100</span>
+        </button>
+    </div>
+    <button
+            class="Spoiler-trigger btn btn_primary btn_nr"
+            type="button"
+            th:data-showtext="#{review.less}"
+            data-showtext="Свернуть отзыв"
+            th:data-hidetext="#{review.more}"
+            data-hidetext="Показать отзыв полностью"
+            th:if="${withButton}"
+    >
+    </button>
+</div>
+</body>
+</html>
