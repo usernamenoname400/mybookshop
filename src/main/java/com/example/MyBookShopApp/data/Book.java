@@ -1,38 +1,45 @@
 package com.example.MyBookShopApp.data;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Table(name="books")
 public class Book {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-  private String author;
+  @ManyToOne
+  @JoinColumn(name = "author_id", referencedColumnName = "id")
+  private Author author;
+  @ManyToOne
+  @JoinColumn(name = "genres_id", referencedColumnName = "id")
+  private Genres genres;
   private String title;
   private String priceOld;
   private String price;
-  private Integer rating;
-  private Integer authorId;
-
-  public Book(Integer id, String author, String title, String priceOld, String price, Integer rating,
-              Integer authorId) {
-    this.id = id;
-    this.author = author;
-    this.title = title;
-    this.priceOld = priceOld;
-    this.price = price;
-    this.rating = rating;
-    this.authorId = authorId;
-  }
-
-  public Book() {
-  }
+  private String descriptionShort;
+  private String descriptionRest;
+  private Date dtRelease;
+  @OneToOne(mappedBy = "book")
+  @PrimaryKeyJoinColumn
+  private Rating rating;
+  @ManyToMany(mappedBy = "bookList")
+  private List<Tag> tagList = new ArrayList<>();
 
   @Override
   public String toString() {
     return "Book{" +
            "id=" + id +
-           ", author='" + author + '\'' +
-           ", authorId=" + authorId +
+           ", author=" + author +
            ", title='" + title + '\'' +
            ", priceOld='" + priceOld + '\'' +
            ", price='" + price + '\'' +
+           ", dtRelease=" + dtRelease +
            ", rating=" + rating +
+           ", genres=" + genres +
            '}';
   }
 
@@ -44,11 +51,11 @@ public class Book {
     this.id = id;
   }
 
-  public String getAuthor() {
+  public Author getAuthor() {
     return author;
   }
 
-  public void setAuthor(String author) {
+  public void setAuthor(Author author) {
     this.author = author;
   }
 
@@ -76,19 +83,51 @@ public class Book {
     this.price = price;
   }
 
-  public Integer getRating() {
+  public Rating getRating() {
     return rating;
   }
 
-  public void setRating(Integer rating) {
+  public void setRating(Rating rating) {
     this.rating = rating;
   }
 
-  public Integer getAuthorId() {
-    return authorId;
+  public Date getDtRelease() {
+    return dtRelease;
   }
 
-  public void setAuthorId(Integer authorId) {
-    this.authorId = authorId;
+  public void setDtRelease(Date dtRelease) {
+    this.dtRelease = dtRelease;
+  }
+
+  public Genres getGenres() {
+    return genres;
+  }
+
+  public void setGenres(Genres genres) {
+    this.genres = genres;
+  }
+
+  public String getDescriptionShort() {
+    return descriptionShort;
+  }
+
+  public void setDescriptionShort(String descriptionShort) {
+    this.descriptionShort = descriptionShort;
+  }
+
+  public String getDescriptionRest() {
+    return descriptionRest;
+  }
+
+  public void setDescriptionRest(String descriptionRest) {
+    this.descriptionRest = descriptionRest;
+  }
+
+  public List<Tag> getTagList() {
+    return tagList;
+  }
+
+  public void setTagList(List<Tag> tagList) {
+    this.tagList = tagList;
   }
 }

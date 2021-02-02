@@ -1939,6 +1939,8 @@ label.toggle {
 }
 .logo-image {
   visibility: visible;
+  width: 48px;
+  height: 48px;
 }
 .logo-text {
   margin-left: 10px;

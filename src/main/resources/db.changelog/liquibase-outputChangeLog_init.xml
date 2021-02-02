@@ -1,0 +1,73 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.10.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+    <changeSet author="somebody (generated)" id="1612074938876-1">
+        <createTable tableName="ratings">
+            <column name="book_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ratings_pkey"/>
+            </column>
+            <column name="rating1" type="INTEGER"/>
+            <column name="rating2" type="INTEGER"/>
+            <column name="rating3" type="INTEGER"/>
+            <column name="rating4" type="INTEGER"/>
+            <column name="rating5" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-2">
+        <createTable tableName="genres">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="genres_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="parent_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-3">
+        <createTable tableName="authors">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="authors_pkey"/>
+            </column>
+            <column name="biography_rest" type="VARCHAR(2000)"/>
+            <column name="biography_short" type="VARCHAR(500)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="photo" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-4">
+        <createTable tableName="books">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="books_pkey"/>
+            </column>
+            <column name="dt_release" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="price" type="VARCHAR(255)"/>
+            <column name="price_old" type="VARCHAR(255)"/>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="author_id" type="INTEGER"/>
+            <column name="genres_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-5">
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="books" constraintName="fkfjixh2vym2cvfj3ufxj91jem7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="authors" validate="true"/>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-6">
+        <addForeignKeyConstraint baseColumnNames="genres_id" baseTableName="books" constraintName="fkc6qxfudblltp3g8lelh26apuj" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="genres" validate="true"/>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-7">
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="ratings" constraintName="fkldi3twb2xod3e4byd4xx35cqi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books" validate="true"/>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-8">
+        <addForeignKeyConstraint baseColumnNames="parent_id" baseTableName="genres" constraintName="fkoaold0bfrn25lmbsjnp64lxp" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="genres" validate="true"/>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-9">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="authors_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-10">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="books_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-11">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="genres_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="somebody (generated)" id="1612074938876-12">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="test_entities_id_seq" startValue="1"/>
+    </changeSet>
+</databaseChangeLog>

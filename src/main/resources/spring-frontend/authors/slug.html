@@ -10,7 +10,7 @@
 <html class="ie9" lang="ru">
 <![endif]-->
 <!--[if gt IE 9]><!--> <html  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
-<head th:replace="~{fragments/head_fragment :: headFragment (pageName=${authorData.firsName + ' ' + authorData.lastName})}"></head>
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName=${authorData.firstName + ' ' + authorData.lastName})}"></head>
 <body class="Site">
 <!--if lt IE 8
 p.error-browser
@@ -28,9 +28,9 @@ p.error-browser
         <ul class="breadcrumbs">
           <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}" th:text="#{topbar.main}">Главная</a></li>
           <li class="breadcrumbs-item"><a href="/authors/index.html" th:href="@{/authors}" th:text="#{topbar.authors}">Авторы</a></li>
-          <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${authorData.firsName + ' ' + authorData.lastName}">Борис Васильевич Бедный</span></li>
+          <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${authorData.firstName + ' ' + authorData.lastName}">Борис Васильевич Бедный</span></li>
         </ul>
-        <h1 class="Middle-title" th:text="${authorData.firsName + ' ' + authorData.lastName}">Борис Васильевич Бедный</h1>
+        <h1 class="Middle-title" th:text="${authorData.firstName + ' ' + authorData.lastName}">Борис Васильевич Бедный</h1>
         <article class="Article">
           <div class="sdf">
           </div>
@@ -60,10 +60,10 @@ p.error-browser
           </div>
         </article>
         <div class="Section">
-          <div th:replace="~{fragments/carousel_fragment :: carouselFragment(books=${authorBooks}, title=#{author.books})}"></div>
+          <div th:replace="~{fragments/carousel_fragment :: carouselFragment(books=${authorData.bookList}, title=#{author.books})}"></div>
           <footer class="Section-footer">
             <a class="Author-books" href="/books/author.html" th:href="|@{/books/author/}${authorData.id}|">
-              Все книги автора<span class="Author-amount" th:text="${'(' + authorBooks.size() + ')'}">(55)</span>
+              Все книги автора<span class="Author-amount" th:text="${'(' + authorData.bookList.size() + ')'}">(55)</span>
             </a>
           </footer>
         </div>

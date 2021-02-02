@@ -35,7 +35,7 @@ public class GenresController {
 
   @GetMapping("/genres/super/{genresId:\\d+}")
   public String getSuperGenrePage(@PathVariable Integer genresId, Model model) {
-    model.addAttribute("genre", genresService.getSuperGenres(genresId));
+    model.addAttribute("genre", genresService.getGenres(genresId));
     model.addAttribute("booksGenre", bookService.getBooksBySuperGenre(genresId));
     return "genres/slug";
   }

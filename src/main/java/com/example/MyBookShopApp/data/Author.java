@@ -1,6 +1,14 @@
 package com.example.MyBookShopApp.data;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "authors")
 public class Author {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String firstName;
   private String lastName;
@@ -8,29 +16,24 @@ public class Author {
   private String biographyRest;
   private String photo;
 
-  public Author(Integer id, String firstName, String lastName, String biographyShort, String biographyRest,
-                String photo) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.biographyShort = biographyShort;
-    this.biographyRest = biographyRest;
-    this.photo = photo;
-  }
-
-  public Author() {
-  }
+  @OneToMany(mappedBy = "author")
+  private List<Book> bookList = new ArrayList<>();
 
   @Override
   public String toString() {
-    return "Author{" +
-           "id=" + id +
-           ", firstName='" + firstName + '\'' +
-           ", lastName='" + lastName + '\'' +
-           ", biographyShort='" + biographyShort + '\'' +
-           ", biographyRest='" + biographyRest + '\'' +
-           ", photo='" + photo + '\'' +
-           '}';
+    return "Author{" + firstName + ' ' + lastName + '}';
+  }
+
+  public List<Book> getBookList() {
+    return bookList;
+  }
+
+  public void setBookList(List<Book> bookList) {
+    this.bookList = bookList;
+  }
+
+  public String getName() {
+    return firstName + ' ' + lastName;
   }
 
   public Integer getId() {
@@ -41,7 +44,7 @@ public class Author {
     this.id = id;
   }
 
-  public String getFirsName() {
+  public String getFirstName() {
     return firstName;
   }
 

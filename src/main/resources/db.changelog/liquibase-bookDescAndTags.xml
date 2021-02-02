@@ -1,0 +1,36 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.10.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+  <changeSet author="somebody" id="add book description">
+    <addColumn tableName="books">
+      <column name="description_short" type="VARCHAR(500)" />
+      <column name="description_rest" type="VARCHAR(2000)" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="somebody" id="add tags table">
+    <createTable tableName="tags">
+      <column name="id" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="tags_pkey"/>
+      </column>
+      <column name="name" type="VARCHAR(255)"/>
+    </createTable>
+  </changeSet>
+  <changeSet author="somebody" id="add tags sequence">
+    <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="tags_id_seq" startValue="1"/>
+  </changeSet>
+  <changeSet author="somebody" id="add books to tags relation">
+    <createTable tableName="books_tags">
+      <column name="book_id" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="books_tags_pkey"/>
+      </column>
+      <column name="tag_id" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="books_tags_pkey"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="somebody" id="book_tags to books foreign key">
+    <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="books_tags" constraintName="books_tags_books_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books" validate="true"/>
+  </changeSet>
+  <changeSet author="somebody" id="book_tags to tags foreign key">
+    <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="books_tags" constraintName="books_tags_tags_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tags" validate="true"/>
+  </changeSet>
+</databaseChangeLog>

@@ -1,28 +1,30 @@
 package com.example.MyBookShopApp.data;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name="genres")
 public class Genres {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String name;
-  private String superGenre;
-  private Integer superId;
-  private Integer bookCount;
-
-  public Genres(Integer id, String name, String superGenre, Integer superId, Integer bookCount) {
-    this.id = id;
-    this.name = name;
-    this.superGenre = superGenre;
-    this.superId = superId;
-    this.bookCount = bookCount;
-  }
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  private Genres parent;
+  @OneToMany(mappedBy = "genres")
+  private List<Book> bookList = new ArrayList<>();
+  @OneToMany(mappedBy = "parent")
+  private List<Genres> childGenres;
 
   @Override
   public String toString() {
     return "Genres{" +
            "id=" + id +
            ", name='" + name + '\'' +
-           ", superGenre='" + superGenre + '\'' +
-           ", superId=" + superId +
-           ", bookCount=" + bookCount +
+           //", superId=" + superId +
+           //", bookCount=" + bookList.size() +
            '}';
   }
 
@@ -42,27 +44,28 @@ public class Genres {
     this.name = name;
   }
 
-  public String getSuperGenre() {
-    return superGenre;
+  public Genres getParent() {
+    return parent;
   }
 
-  public void setSuperGenre(String superGenre) {
-    this.superGenre = superGenre;
+  public void setParent(Genres parent) {
+    this.parent = parent;
+  }
+
+  public List<Book> getBookList() {
+    return bookList;
+  }
+
+  public void setBookList(List<Book> bookList) {
+    this.bookList = bookList;
   }
 
   public Integer getBookCount() {
-    return bookCount;
-  }
+    Integer result = bookList.size();
 
-  public void setBookCount(Integer bookCount) {
-    this.bookCount = bookCount;
-  }
-
-  public Integer getSuperId() {
-    return superId;
-  }
-
-  public void setSuperId(Integer superId) {
-    this.superId = superId;
+    if (childGenres != null) {
+      result += childGenres.stream().map(genres -> genres.getBookCount()).reduce(0, Integer::sum);
+    }
+    return result;
   }
 }

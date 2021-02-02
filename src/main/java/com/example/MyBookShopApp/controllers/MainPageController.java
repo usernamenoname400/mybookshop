@@ -2,12 +2,14 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.data.BookService;
+import com.example.MyBookShopApp.data.TagService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,12 +23,14 @@ import java.util.List;
 @Controller
 public class MainPageController {
   private final BookService bookService;
+  private final TagService tagService;
   @Value("${sql.rowlimit}")
   private int rowLimit;
 
   @Autowired
-  public MainPageController(BookService bookService) {
+  public MainPageController(BookService bookService, TagService tagService) {
     this.bookService = bookService;
+    this.tagService = tagService;
   }
 
   @ModelAttribute("recommendedBooks")
@@ -47,13 +51,14 @@ public class MainPageController {
   }
 
   @GetMapping("/")
-  public String mainPage() {
+  public String mainPage(Model model) {
+    model.addAttribute("tags", tagService.getAll());
     return "index";
   }
 
   @GetMapping("/favicon.ico")
   public void redirectWithUsingRedirectPrefix(ModelMap model, HttpServletResponse response) throws Exception {
-    Resource serverFile = new ClassPathResource("spring-frontend/favicon.ico");
+    Resource serverFile = new ClassPathResource("spring-frontend/logo.ico");
 
     if (serverFile.exists()) {
       InputStream fsIo = serverFile.getInputStream();

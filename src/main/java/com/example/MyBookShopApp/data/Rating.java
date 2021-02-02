@@ -1,75 +1,93 @@
 package com.example.MyBookShopApp.data;
 
-public class Rating {
-  private int bookId;
-  private int rating1;
-  private int rating2;
-  private int rating3;
-  private int rating4;
-  private int rating5;
+import javax.persistence.*;
 
-  public Rating(int bookId, int rating1, int rating2, int rating3, int rating4, int rating5) {
-    this.bookId = bookId;
-    this.rating1 = rating1;
-    this.rating2 = rating2;
-    this.rating3 = rating3;
-    this.rating4 = rating4;
-    this.rating5 = rating5;
+@Entity
+@Table(name="ratings")
+public class Rating {
+  @Id
+  @Column(name = "book_id")
+  private Integer bookId;
+  @OneToOne
+  @MapsId
+  @JoinColumn(name = "book_id", referencedColumnName = "id")
+  private Book book;
+  private Integer rating1;
+  private Integer rating2;
+  private Integer rating3;
+  private Integer rating4;
+  private Integer rating5;
+
+  public Rating() {
+    this.book = null;
+    this.rating1 = 0;
+    this.rating2 = 0;
+    this.rating3 = 0;
+    this.rating4 = 0;
+    this.rating5 = 0;
   }
 
-  public int getBookId() {
+  public Integer getBookId() {
     return bookId;
   }
 
-  public void setBookId(int bookId) {
+  public void setBookId(Integer bookId) {
     this.bookId = bookId;
   }
 
-  public int getRating1() {
+  public Book getBook() {
+    return book;
+  }
+
+  public void setBook(Integer bookId) {
+    this.book = book;
+  }
+
+  public Integer getRating1() {
     return rating1;
   }
 
-  public void setRating1(int rating1) {
+  public void setRating1(Integer rating1) {
     this.rating1 = rating1;
   }
 
-  public int getRating2() {
+  public Integer getRating2() {
     return rating2;
   }
 
-  public void setRating2(int rating2) {
+  public void setRating2(Integer rating2) {
     this.rating2 = rating2;
   }
 
-  public int getRating3() {
+  public Integer getRating3() {
     return rating3;
   }
 
-  public void setRating3(int rating3) {
+  public void setRating3(Integer rating3) {
     this.rating3 = rating3;
   }
 
-  public int getRating4() {
+  public Integer getRating4() {
     return rating4;
   }
 
-  public void setRating4(int rating4) {
+  public void setRating4(Integer rating4) {
     this.rating4 = rating4;
   }
 
-  public int getRating5() {
+  public Integer getRating5() {
     return rating5;
   }
 
-  public void setRating5(int rating5) {
+  public void setRating5(Integer rating5) {
     this.rating5 = rating5;
   }
 
-  public int getRatingAll() {
+  public Integer getRatingAll() {
     return rating1 + rating2 + rating3 + rating4 + rating5;
   }
 
-  public int getRatingAvg() {
+  public Integer getRatingAvg() {
     return
         Math.round
         (

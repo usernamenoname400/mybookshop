@@ -41,17 +41,17 @@ p.error-browser
                 <h1 class="ProductCard-title" th:text="${book.title}">Мара и морок</h1>
                 <div class="ProductCard-author">
                   <span class="ProductCard-titleProp">Автор:</span>&#32;
-                  <a href="#" th:text="${book.author}">Лия Арден</a>
+                  <a href="#" th:href="|@{/books/author/}${book.author.id}|" th:text="${book.author.name}">Лия Арден</a>
                 </div>
                 <div class="ProductCard-rating">
                   <span class="ProductCard-titleProp" th:text="#{book.rating}">Рейтинг:</span>
                   <button class="trigger trigger_dropdown" type="button">
                     <div
                             class="Rating Rating_noStyleLink"
-                            th:replace="~{fragments/book_fragments :: ratingStars(${ratings.ratingAvg}, ${ratings.ratingAll})}"
+                            th:replace="~{fragments/book_fragments :: ratingStars(${book.rating.ratingAvg}, ${book.rating.ratingAll})}"
                     >
                     </div>
-                    <div th:replace="~{fragments/book_fragments :: ratingsModal(${ratings})}"></div>
+                    <div th:replace="~{fragments/book_fragments :: ratingsModal(${book.rating})}"></div>
                   </button>
                 </div>
                 <div class="ProductCard-assessment">
@@ -73,7 +73,14 @@ p.error-browser
                 </div>
                 <div class="ProductCard-tags">
                   <span class="ProductCard-titleProp" th:text="#{common.tags}">Тэги:</span>
-                  <a href="/tags/">Современные</a>,&#32;<a href="/tags/">Психологическая проза</a>
+                  <span th:each="tag, iterStat : ${book.tagList}">
+                    <a
+                            href="/tags/"
+                            th:href="|@{/tags/}${tag.id}|"
+                            th:text="${tag.name}">
+                      Современные
+                    </a><span th:if="${!iterStat.last}">,&#32;</span>
+                  </span>
                 </div>
                 <div class="ProductCard-cost">
                   <span class="ProductCard-titleProp" th:text="#{book.price}">Цена:</span>
@@ -89,10 +96,31 @@ p.error-browser
                 //        +img('change.svg','icons/card').-icon
                 -->
               </div>
-              <div class="ProductCard-text">
-                <p>Таких, как я, называют Марами - отмеченными самой богиней смерти Мораной. Когда-то у меня и моих шести сестер был свой путь. Тогда люди нас уважали и просили о милосердии. Они приносили нам подношения и молились нам. Но 200 лет назад все изменилось, когда принц Серата осмелился поднять руку на одну из нас. Я пыталась отомстить, но погибли мы все. Теперь правители Аракена, погрязшие в длительной войне со своим соседом Сератом, решили вернуть меня к жизни. Дать второй шанс на месть и свободу, привязав меня к тому, против кого я никогда не пойду. Таких, как он, называют Морок, и их боятся абсолютно все.
-                </p>
-              </div>
+              <article class="Article">
+                <div class="sdf">
+                </div>
+                <div class="Spoiler">
+                  <div class="Spoiler-visible">
+                    <div>
+                      <p th:text="${book.descriptionShort}"></p>
+                    </div>
+                  </div>
+                  <div class="Spoiler-hide">
+                    <p th:text="${book.descriptionRest}"></p>
+                  </div>
+                  <div class="Spoiler-footer">
+                    <button
+                            class="Spoiler-trigger btn btn_primary btn_nr"
+                            type="button"
+                            th:data-showtext="#{buttons.showless}"
+                            data-showtext="Свернуть"
+                            th:data-hidetext="#{buttons.showmore}"
+                            data-hidetext="Показать полностью"
+                    >
+                    </button>
+                  </div>
+                </div>
+              </article>
               <div class="ProductCard-cart">
                 <!--+div.-cartElement.-cartElement_amount-->
                 <!--    +Amount._product-->
@@ -125,7 +153,7 @@ p.error-browser
           <div class="Product-comments">
             <div class="Product-comments-header">
               <h3 class="Product-comments-title" th:text="#{book.reviews}">Отзывы</h3>
-              <span class="Product-comments-amount" th:text="|${ratings.ratingAll} #{book.reviewcnt}|">567 отзывов</span>
+              <span class="Product-comments-amount" th:text="|${book.rating.ratingAll} #{book.reviewcnt}|">567 отзывов</span>
             </div>
           </div>
           <div class="Comments">

@@ -1943,7 +1943,8 @@
 .Header-logo {
   flex-shrink: 4;
   display: flex;
-  align-items: center;
+  align-items: start;
+  min-width: 200px;
 }
 .Header-logo a {
   border: none !important;

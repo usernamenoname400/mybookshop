@@ -10,6 +10,7 @@
 <html class="ie9" lang="ru">
 <![endif]-->
 <!--[if gt IE 9]><!--> <html  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<!--/*@thymesVar id="genre" type="com.example.MyBookShopApp.data.Genres"*/-->
 <head th:replace="~{fragments/head_fragment :: headFragment (pageName=${genre.name})}"></head>
 <body class="Site">
   <!--if lt IE 8
@@ -28,8 +29,8 @@
         <ul class="breadcrumbs">
           <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}" th:text="#{topbar.main}">Главная</a></li>
           <li class="breadcrumbs-item"><a href="/genres/index.html" th:href="@{/genres}" th:text="#{topbar.genres}">Жанры</a></li>
-          <li class="breadcrumbs-item" th:if="${genre.superGenre != ''}">
-            <a href="/genres/index.html" th:href="|@{/genres/super/}${genre.superId}" th:text="${genre.superGenre}">Легкое чтение</a>
+          <li class="breadcrumbs-item" th:if="${genre.parent != null}">
+            <a href="/genres/index.html" th:href="|@{/genres/super/}${genre.parent.id}" th:text="${genre.parent.name}">Легкое чтение</a>
           </li>
           <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${genre.name}">Детективы</span></li>
         </ul>
