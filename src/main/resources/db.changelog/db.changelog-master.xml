@@ -10,5 +10,11 @@
   <include file="db.changelog/liquibase-outputChangeLog_init.xml"/>
   <include file="db.changelog/liquibase-clients.xml"/>
   <include file="db.changelog/liquibase-bookDescAndTags.xml"/>
+  <include file="db.changelog/liquibase-authors-data.sql"/>
+  <include file="db.changelog/liquibase-genres-data.sql"/>
+  <include file="db.changelog/liquibase-tags-data.sql"/>
+  <include file="db.changelog/liquibase-books-data.sql"/>
+  <include file="db.changelog/liquibase-ratings-data.sql"/>
+  <include file="db.changelog/liqibase-books-tags-data.sql"/>
 
 </databaseChangeLog>

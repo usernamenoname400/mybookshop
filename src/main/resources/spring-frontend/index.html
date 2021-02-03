@@ -35,12 +35,18 @@
         <h2 class="Middle-title">Книги по тегам
         </h2>
         <div class="Tags" id="tags">
-          <div th:each="tag : ${tags}" class="Tag Tag_xs" >
+          <div
+                  th:each="tag : ${tags}"
+                  class="Tag"
+                  th:classappend="|
+                    ${tag.bookList.size() >= 10 ? 'Tag_lg' : ''}
+                    ${tag.bookList.size() >= 2 &&  tag.bookList.size() < 5 ? 'Tag_sm' : ''}
+                    ${tag.bookList.size() >= 7 &&  tag.bookList.size() < 10 ? 'Tag_md' : ''}
+                    ${tag.bookList.size() < 2 ? 'Tag_xs' : ''}
+                    |"
+          >
             <a th:href="|@{/tags/}${tag.id}|" th:text="${tag.name}">современная литература</a>
           </div>
-          <div class="Tag Tag_sm"><a href="/tags/index.html">классическая литература</a></div>
-          <div class="Tag Tag_md"><a href="/tags/index.html">зарубежная литература</a></div>
-          <div class="Tag Tag_lg"><a href="/tags/index.html">английская литература</a></div>
         </div>
       </main>
     </div>

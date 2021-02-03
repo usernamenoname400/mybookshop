@@ -1,3 +1,5 @@
+--liquibase formatted sql
+--changeset somebody:fill-table-tags runInTransaction:true failOnError:true
 insert into tags (id, name) values (1, 'sagittis dui vel');
 insert into tags (id, name) values (2, 'scelerisque quam');
 insert into tags (id, name) values (3, 'id nulla ultrices');
@@ -28,3 +30,4 @@ insert into tags (id, name) values (27, 'maecenas ut');
 insert into tags (id, name) values (28, 'consequat lectus in');
 insert into tags (id, name) values (29, 'donec');
 insert into tags (id, name) values (30, 'primis');
+--rollback rollback;

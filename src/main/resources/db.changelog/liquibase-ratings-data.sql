@@ -1,3 +1,5 @@
+--liquibase formatted sql
+--changeset somebody:fill-table-ratings runInTransaction:true failOnError:true
 insert into ratings (book_id, rating1, rating2, rating3, rating4, rating5) values (1, 762, 038, 266, 215, 041);
 insert into ratings (book_id, rating1, rating2, rating3, rating4, rating5) values (2, 431, 336, 761, 148, 286);
 insert into ratings (book_id, rating1, rating2, rating3, rating4, rating5) values (3, 896, 018, 371, 718, 210);
@@ -98,3 +100,4 @@ insert into ratings (book_id, rating1, rating2, rating3, rating4, rating5) value
 insert into ratings (book_id, rating1, rating2, rating3, rating4, rating5) values (98, 391, 498, 007, 319, 878);
 insert into ratings (book_id, rating1, rating2, rating3, rating4, rating5) values (99, 590, 956, 613, 342, 269);
 insert into ratings (book_id, rating1, rating2, rating3, rating4, rating5) values (100, 445, 989, 825, 439, 048);
+--rollback rollback;

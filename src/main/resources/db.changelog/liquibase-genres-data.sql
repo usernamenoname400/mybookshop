@@ -1,3 +1,5 @@
+--liquibase formatted sql
+--changeset somebody:fill-table-genres runInTransaction:true failOnError:true
 insert into genres (id, name, parent_id) values (1,  'Detective', null);
 insert into genres (id, name, parent_id) values (2,  'History',   null);
 insert into genres (id, name, parent_id) values (3,  'Drama',     null);
@@ -102,3 +104,4 @@ insert into genres (id, name, parent_id) values (101,'eget orci vehicula',      
 insert into genres (id, name, parent_id) values (102,'sapien dignissim vetibulm', 4);
 insert into genres (id, name, parent_id) values (103,'nullam molestie nibh',      4);
 insert into genres (id, name, parent_id) values (104,'nisi',                      4);
+--rollback rollback;

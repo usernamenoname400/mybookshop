@@ -1,3 +1,5 @@
+--liquibase formatted sql
+--changeset somebody:fill-table-books_tags runInTransaction:true failOnError:true
 insert into books_tags (book_id, tag_id) values (62, 28);
 insert into books_tags (book_id, tag_id) values (84, 28);
 insert into books_tags (book_id, tag_id) values (2, 29);
@@ -288,3 +290,4 @@ insert into books_tags (book_id, tag_id) values (50, 9);
 insert into books_tags (book_id, tag_id) values (22, 26);
 insert into books_tags (book_id, tag_id) values (26, 25);
 insert into books_tags (book_id, tag_id) values (95, 30);
+--rollback rollback;
