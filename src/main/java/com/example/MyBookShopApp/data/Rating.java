@@ -1,15 +1,18 @@
 package com.example.MyBookShopApp.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="ratings")
+@Table(name="rating")
 public class Rating {
   @Id
   @Column(name = "book_id")
   private Integer bookId;
   @OneToOne
   @MapsId
+  @JsonBackReference
   @JoinColumn(name = "book_id", referencedColumnName = "id")
   private Book book;
   private Integer rating1;

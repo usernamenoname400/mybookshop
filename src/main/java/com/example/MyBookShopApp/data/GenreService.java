@@ -9,28 +9,28 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class GenresService {
-  private final GenresRepository genresRepository;
+public class GenreService {
+  private final GenreRepository genresRepository;
 
   @Autowired
-  public GenresService(GenresRepository genresRepository) {
+  public GenreService(GenreRepository genresRepository) {
     this.genresRepository = genresRepository;
   }
 
-  public List<Genres> getSuperGenresList() {
+  public List<Genre> getSuperGenresList() {
     return genresRepository.findRoot();
   }
 
-  public Map<Integer, List<Genres>> getGenresMap() {
-    List<Genres> genres = genresRepository.findRegular();
+  public Map<Integer, List<Genre>> getGenresMap() {
+    List<Genre> genres = genresRepository.findRegular();
 
     if (genres != null && genres.size() > 0) {
-      return genres.stream().collect(Collectors.groupingBy((Genres g) -> g.getParent().getId()));
+      return genres.stream().collect(Collectors.groupingBy((Genre g) -> g.getParent().getId()));
     }
     return new HashMap<>();
   }
 
-  public Genres getGenres(Integer genresId) {
+  public Genre getGenre(Integer genresId) {
     return genresRepository.findById(genresId).get();
   }
 }

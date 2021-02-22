@@ -32,7 +32,7 @@
         </ul>
         <h1 class="Middle-title" th:text="${authorData.name}">Борис Васильевич Бедный</h1>
         <div class="Section">
-          <div th:replace="~{fragments/cards_fragment :: cardsFragment(books=${authorData.bookList}, savePath=${false})}"></div>
+          <div th:replace="~{fragments/cards_fragment :: cardsFragment(books=${authorBooks}, savePath=${false})}"></div>
         </div>
       </main>
     </div>

@@ -1,30 +1,32 @@
 package com.example.MyBookShopApp.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="genres")
-public class Genres {
+@Table(name="genre")
+public class Genre {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String name;
   @ManyToOne(cascade = CascadeType.PERSIST)
-  private Genres parent;
-  @OneToMany(mappedBy = "genres")
+  private Genre parent;
+  @OneToMany(mappedBy = "genre")
+  @JsonBackReference
   private List<Book> bookList = new ArrayList<>();
   @OneToMany(mappedBy = "parent")
-  private List<Genres> childGenres;
+  private List<Genre> childGenres;
 
   @Override
   public String toString() {
     return "Genres{" +
            "id=" + id +
            ", name='" + name + '\'' +
-           //", superId=" + superId +
-           //", bookCount=" + bookList.size() +
+           ", parentId='" + ((parent == null) ? "": parent.id) + '\'' +
            '}';
   }
 
@@ -44,11 +46,11 @@ public class Genres {
     this.name = name;
   }
 
-  public Genres getParent() {
+  public Genre getParent() {
     return parent;
   }
 
-  public void setParent(Genres parent) {
+  public void setParent(Genre parent) {
     this.parent = parent;
   }
 

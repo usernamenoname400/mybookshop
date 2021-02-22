@@ -33,7 +33,8 @@ p.error-browser
         <div class="Product">
           <div class="ProductCard">
             <div class="ProductCard-look">
-              <div class="ProductCard-photo"><img src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
+              <div class="ProductCard-photo">
+                <img src="/assets/img/content/main/card.jpg" th:src="${book.image}" alt="card.jpg"/>
               </div>
             </div>
             <div class="ProductCard-desc">
@@ -41,7 +42,7 @@ p.error-browser
                 <h1 class="ProductCard-title" th:text="${book.title}">Мара и морок</h1>
                 <div class="ProductCard-author">
                   <span class="ProductCard-titleProp">Автор:</span>&#32;
-                  <a href="#" th:href="|@{/books/author/}${book.author.id}|" th:text="${book.author.name}">Лия Арден</a>
+                  <a href="#" th:href="|@{/authorbooks/}${book.author.id}|" th:text="${book.author.name}">Лия Арден</a>
                 </div>
                 <div class="ProductCard-rating">
                   <span class="ProductCard-titleProp" th:text="#{book.rating}">Рейтинг:</span>
@@ -84,8 +85,8 @@ p.error-browser
                 </div>
                 <div class="ProductCard-cost">
                   <span class="ProductCard-titleProp" th:text="#{book.price}">Цена:</span>
-                  <span class="ProductCard-priceOld" th:text="${book.priceOld}">₽300</span>
-                  <span class="ProductCard-price" th:text="${book.price}">₽180</span>
+                  <span class="ProductCard-priceOld" th:text="${book.price}">₽300</span>
+                  <span class="ProductCard-price" th:text="${book.price - (book.price * book.discount / 100)}">₽180</span>
                 </div>
                 <!--+div.-info
                 //+div.-cost
@@ -102,11 +103,11 @@ p.error-browser
                 <div class="Spoiler">
                   <div class="Spoiler-visible">
                     <div>
-                      <p th:text="${book.descriptionShort}"></p>
+                      <p th:text="${stringHelper.getLeadingPart(book.description, 200)}"></p>
                     </div>
                   </div>
                   <div class="Spoiler-hide">
-                    <p th:text="${book.descriptionRest}"></p>
+                    <p th:text="${stringHelper.getSuffixPart(book.description, 200)}"></p>
                   </div>
                   <div class="Spoiler-footer">
                     <button

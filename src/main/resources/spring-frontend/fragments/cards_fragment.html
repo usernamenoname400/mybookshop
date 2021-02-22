@@ -5,10 +5,10 @@
     <div class="Card" th:each="book : ${books}">
         <div class="Card-picture">
             <a href="#" th:if="${!savePath}" th:href="|@{/books/}${book.id}|">
-                <img src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
+                <img src="/assets/img/content/main/card.jpg" th:src="${book.image}" alt="card.jpg"/>
             </a>
             <a href="#" th:if="${savePath}" th:href="${#httpServletRequest.requestURI + '/' + book.id}">
-                <img src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
+                <img src="/assets/img/content/main/card.jpg" th:src="${book.image}" alt="card.jpg"/>
             </a>
         </div>
         <div class="Card-content">
@@ -20,14 +20,29 @@
                     Техника
                 </a>
             </strong>
+            <div th:text="${book.author}"/>
             <div class="Card-description">
                 <a th:href="|@{/authors/}${book.author.id}|" th:text="${book.author.name}">Кондратенко Александр Петрович</a>
             </div>
             <div class="Card-cost">
-                <span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span>
-                <span class="Card-price" th:text="${book.price}">₽190.00</span>
+                <span class="Card-priceOld" th:text="${book.price}">₽300.00</span>
+                <span class="Card-price" th:text="${book.price - (book.price * book.discount / 100)}">₽190.00</span>
             </div>
         </div>
+    </div>
+    <div class="Cards-footer Cards-footer_center" th:with="uriArr=${#strings.arraySplit(#httpServletRequest.requestURI, '/')}">
+        <a
+                class="btn btn_primary"
+                href="#"
+                th:data-refreshshow="${uriArr[0]}"
+                th:data-refreshid="${uriArr.length > 1 ? uriArr[1] : null}"
+                data-refreshoffset="0"
+                data-refreshlimit="5"
+                th:text="#{buttons.shownext}"
+                th:attr="data-refreshquery=${searchWordDto.example}"
+        >
+            Показать еще
+        </a>
     </div>
 </div>
 </body>

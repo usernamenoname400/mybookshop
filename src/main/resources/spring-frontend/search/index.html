@@ -28,7 +28,7 @@
         <h1 class="Middle-title" th:text="#{search.title}">Поиск</h1>
         <div class="Section">
           <div class="search">
-            <form class="form form_search" action="#" method="post" data-searchlimit="20">
+            <form class="form form_search" action="#" method="get" data-searchlimit="5" th:object="${searchWordDto}">
               <input
                       class="search-input"
                       id="querypage"
@@ -36,14 +36,14 @@
                       type="text"
                       placeholder="Search over 30 million book titles"
                       th:placeholder="#{topbar.searchplaceholder}"
-                      th:value="${search}"
+                      th:value="*{example}"
                       value="Техника"
               />
               <button
                       class="search-button"
                       type="submit"
-                      name="searchpage"
-                      id="searchpage"
+                      name="search"
+                      id="search"
                       th:text="#{buttons.search}"
               >
                 Поиск
@@ -52,12 +52,12 @@
           </div>
         </div>
         <div class="Section Section_close">
-          <header class="Section-header" th:if="${booksSearch != null}">
-            <h2 class="Section-title Middle-searchHeader" th:text="#{search.resultcnt(${booksSearch.size()})}">Найдено 40 книг</h2>
+          <header class="Section-header" th:if="${searchResults != null}">
+            <h2 class="Section-title Middle-searchHeader" th:text="#{search.resultcnt(${searchResults.size()})}">Найдено 40 книг</h2>
           </header>
           <div
-                  th:if="${booksSearch != null}"
-                  th:replace="~{fragments/cards_fragment :: cardsFragment (books=${booksSearch}, savePath=${false})}"></div>
+                  th:if="${searchResults != null}"
+                  th:replace="~{fragments/cards_fragment :: cardsFragment (books=${searchResults}, savePath=${false})}"></div>
         </div>
       </main>
     </div>

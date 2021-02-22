@@ -1,8 +1,6 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.Book;
-import com.example.MyBookShopApp.data.BookService;
-import com.example.MyBookShopApp.data.TagService;
+import com.example.MyBookShopApp.data.*;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,13 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 public class MainPageController {
@@ -33,26 +31,16 @@ public class MainPageController {
     this.tagService = tagService;
   }
 
-  @ModelAttribute("recommendedBooks")
-  public List<Book> recommendedBooks() {
-    return bookService.getBooksData(rowLimit);
-  }
-
-  @ModelAttribute("recentBooks")
-  public List<Book> recentBooks() {
-    Calendar cal = Calendar.getInstance();
-    cal.add(Calendar.MONTH, -1);
-    return bookService.getRecentBooksData(cal.getTime(), new Date(), rowLimit);
-  }
-
-  @ModelAttribute("popularBooks")
-  public List<Book> popularBooks() {
-    return bookService.getBooksData(rowLimit);
-  }
-
   @GetMapping("/")
   public String mainPage(Model model) {
     model.addAttribute("tags", tagService.getAll());
+    model.addAttribute("recommendedBooks", bookService.getPageRecomendedBooks(0, 6).getContent());
+    model.addAttribute("popularBooks", bookService.getPageOfPopular(0, 6).getContent());
+
+    Calendar cal = Calendar.getInstance();
+    cal.add(Calendar.MONTH, -1);
+    model.addAttribute("recentBooks", bookService.getPageOfRecent(cal.getTime(), new Date(), 0, 6).getContent());
+
     return "index";
   }
 
@@ -73,5 +61,12 @@ public class MainPageController {
     } else {
       throw new Exception("File " + serverFile.getFile().getAbsolutePath() + " not found");
     }
+  }
+
+  @GetMapping("/recommended/page")
+  @ResponseBody
+  public BooksPageDTO getBookPage(@RequestParam("offset") Integer offset,
+                                  @RequestParam("limit") Integer limit) {
+    return new BooksPageDTO(bookService.getPageRecomendedBooks(offset, limit).getContent());
   }
 }

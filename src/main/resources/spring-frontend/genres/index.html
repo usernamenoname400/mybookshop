@@ -31,7 +31,7 @@
             <div class="Tags" th:each="superGenre : ${superGenres}">
               <div class="Tags-title">
                 <div class="Tag">
-                  <a href="/genres/slug.html" th:href="${'/genres/super/' + superGenre.id}">
+                  <a href="/genres/slug.html" th:href="${'/genresroot/' + superGenre.id}">
                     <span th:text="${superGenre.name}">Лёгкое чтение</span>
                     <span class="undefined-amount" th:text="${'(' + superGenre.bookCount + ')'}">(15638)</span>
                   </a>

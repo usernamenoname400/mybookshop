@@ -6,7 +6,7 @@
     <div class="Cart-block Cart-block_row">
       <div class="Cart-block Cart-block_pict">
         <a class="Cart-pict" href="#" th:href="${'/books/' + book.id}">
-          <img class="Cart-img" src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
+          <img class="Cart-img" src="/assets/img/content/main/card.jpg" th:src="${book.image}" alt="card.jpg"/>
         </a>
       </div>
       <div class="Cart-block Cart-block_row">
@@ -42,12 +42,11 @@
         <div class="Cart-block Cart-block_price">
           <div th:text="${price}"></div>
           <div class="Cart-priceTitle" th:text="#{cartbook.price}">Цена:</div>
-          <div class="Cart-price Cart-price_old" th:text="${book.priceOld}">254 р.</div>
+          <div class="Cart-price Cart-price_old" th:text="${book.price - (book.price * book.discount / 100)}">254 р.</div>
           <div class="Cart-price" th:text="${book.price}">180 р.</div>
           <div
                   class="Cart-sale"
-                  th:with="price=${T(Double).parseDouble(#strings.replace(book.price,'$',''))},priceOld=${T(Double).parseDouble(#strings.replace(book.priceOld,'$',''))}"
-                  th:text="${T(Math).round(((price / priceOld) - 1) * 100) + '%'}">
+                  th:text="${book.discount + '%'}">
             -30%
           </div>
         </div>

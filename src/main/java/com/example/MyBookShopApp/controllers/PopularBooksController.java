@@ -1,45 +1,44 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.data.BookService;
-import com.example.MyBookShopApp.data.RatingService;
+import com.example.MyBookShopApp.data.BooksPageDTO;
+import com.example.MyBookShopApp.helpers.ThymLeafStringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PopularBooksController {
   private final BookService bookService;
-  private final RatingService ratingService;
   @Value("${sql.rowlimit}")
   private int rowLimit;
 
   @Autowired
-  public PopularBooksController(BookService bookService, RatingService ratingService) {
+  public PopularBooksController(BookService bookService) {
     this.bookService = bookService;
-    this.ratingService = ratingService;
-  }
-
-  @ModelAttribute("popularBooks")
-  public List<Book> popularBooks() {
-    return bookService.getBooksData(rowLimit);
   }
 
   @GetMapping("/popular")
-  public String getPopular() {
+  public String getPopular(Model model) {
+    model.addAttribute("popularBooks", bookService.getPageOfPopular(0, rowLimit).getContent());
     return "books/popular";
   }
 
   @GetMapping("/popular/{bookId:\\d+}")
   public String getRecent(@PathVariable Integer bookId, Model model) {
     model.addAttribute("book", bookService.getBookData(bookId));
-    model.addAttribute("ratings", ratingService.getBookRating(bookId));
+    model.addAttribute("stringHelper", new ThymLeafStringHelper());
     return "books/slug";
+  }
+
+  @GetMapping("/popular/page")
+  @ResponseBody
+  public BooksPageDTO getNextSearchPage(
+      @RequestParam("offset") Integer offset,
+      @RequestParam("limit") Integer limit
+  ) {
+    return new BooksPageDTO(bookService.getPageOfPopular(offset, limit).getContent());
   }
 }

@@ -1,0 +1,33 @@
+--liquibase formatted sql
+--changeset somebody:fill-table-tags runInTransaction:true failOnError:true
+insert into tag (id, name) values (1,  'sagittis dui vel');
+insert into tag (id, name) values (2,  'scelerisque quam');
+insert into tag (id, name) values (3,  'id nulla ultrices');
+insert into tag (id, name) values (4,  'id');
+insert into tag (id, name) values (5,  'donec dapibus');
+insert into tag (id, name) values (6,  'lacinia');
+insert into tag (id, name) values (7,  'fermentum donec ut');
+insert into tag (id, name) values (8,  'dui vel');
+insert into tag (id, name) values (9,  'nonummy');
+insert into tag (id, name) values (10, 'id nonummy ultrices');
+insert into tag (id, name) values (11, 'sed accumsan');
+insert into tag (id, name) values (12, 'ante');
+insert into tag (id, name) values (13, 'ut');
+insert into tag (id, name) values (14, 'adipiscing');
+insert into tag (id, name) values (15, 'vestibulum sed magna');
+insert into tag (id, name) values (16, 'tempor turpis nec');
+insert into tag (id, name) values (17, 'aliquam sit');
+insert into tag (id, name) values (18, 'dapibus at');
+insert into tag (id, name) values (19, 'nunc');
+insert into tag (id, name) values (20, 'non lectus aliquam');
+insert into tag (id, name) values (21, 'lacus');
+insert into tag (id, name) values (22, 'consectetuer');
+insert into tag (id, name) values (23, 'lacinia sapien quis');
+insert into tag (id, name) values (24, 'maecenas pulvinar');
+insert into tag (id, name) values (25, 'duis');
+insert into tag (id, name) values (26, 'eu');
+insert into tag (id, name) values (27, 'maecenas ut');
+insert into tag (id, name) values (28, 'consequat lectus in');
+insert into tag (id, name) values (29, 'donec');
+insert into tag (id, name) values (30, 'primis');
+--rollback rollback;

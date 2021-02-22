@@ -1,17 +1,20 @@
 package com.example.MyBookShopApp.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "tags")
+@Table(name = "tag")
 public class Tag {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   @ManyToMany
+  @JsonBackReference
   @JoinTable(
-      name = "books_tags",
+      name = "book2tag",
       joinColumns = @JoinColumn(name = "tag_id"),
       inverseJoinColumns = @JoinColumn(name = "book_id")
   )

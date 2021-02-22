@@ -33,13 +33,13 @@ p.error-browser
               <strong class="Cart-title" th:text="#{cart.total}">Итого:</strong>
               <span
                       class="Cart-price"
-                      th:text="${'$' + #aggregates.sum(cartBooks.![T(Integer).parseInt(#strings.replace(price, '$', ''))])}"
+                      th:text="${'$' + #aggregates.sum(cartBooks.![price - (price * discount / 100)])}"
               >
                 534 р.
               </span>
               <span
                       class="Cart-price_old"
-                      th:text="${'$' + #aggregates.sum(cartBooks.![T(Integer).parseInt(#strings.replace(priceOld, '$', ''))])}"
+                      th:text="${'$' + #aggregates.sum(cartBooks.![price])}"
               >
                 658 р.
               </span>

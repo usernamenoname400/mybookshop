@@ -1,25 +1,31 @@
 package com.example.MyBookShopApp.controllers;
 
+import com.example.MyBookShopApp.data.Author;
 import com.example.MyBookShopApp.data.AuthorService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.MyBookShopApp.data.BookService;
+import com.example.MyBookShopApp.data.BooksPageDTO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AuthorsController {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
   private final AuthorService authorService;
+  private final BookService bookService;
+  @Value("${sql.rowlimit}")
+  private int rowLimit;
 
   @Autowired
-  public AuthorsController(AuthorService authorService) {
+  public AuthorsController(AuthorService authorService, BookService bookService) {
     this.authorService = authorService;
+    this.bookService = bookService;
   }
 
   @GetMapping("/authors")
@@ -31,16 +37,30 @@ public class AuthorsController {
   @GetMapping("/authors/{authorId:\\d+}")
   public String getAuthorPage(@PathVariable Integer authorId, Model model) {
     model.addAttribute("authorData", authorService.getAuthorData(authorId));
+    model.addAttribute("authorBooks", bookService.getBooksByAuthor(authorId, 0, 6).getContent());
+    model.addAttribute("authorBooksCount", bookService.getBookCountByAuthor(authorId));
     return "authors/slug";
   }
 
-  @GetMapping("/books/author/{authorId:\\d+}")
+  @GetMapping("/authorbooks/{authorId:\\d+}")
   public String getAuthorBooksPage(@PathVariable Integer authorId, Model model) {
     model.addAttribute("authorData", authorService.getAuthorData(authorId));
+    model.addAttribute("authorBooks", bookService.getBooksByAuthor(authorId, 0, rowLimit).getContent());
     return "books/author";
   }
 
+  @GetMapping("/authorbooks/page/{authorId:\\d+}")
+  @ResponseBody
+  public BooksPageDTO getNextSearchPage(
+      @PathVariable Integer authorId,
+      @RequestParam("offset") Integer offset,
+      @RequestParam("limit") Integer limit
+  ) {
+    return new BooksPageDTO(bookService.getBooksByAuthor(authorId, offset, limit).getContent());
+  }
+
   @RequestMapping("/authors/img/{name:\\w+\\.+\\w+}")
+  @ResponseBody
   public void getFile(@PathVariable("name") String name, HttpServletResponse response) throws Exception {
     /*Resource serverFile = authorService.getImageFile(name);
 

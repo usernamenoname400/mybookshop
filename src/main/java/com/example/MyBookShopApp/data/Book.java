@@ -1,32 +1,55 @@
 package com.example.MyBookShopApp.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="books")
+@Table(name="book")
+@ApiModel(description = "Entity representing a book")
 public class Book {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @ApiModelProperty("Identity, generated db automatically")
   private Integer id;
+  @Column(name = "pub_date")
+  @ApiModelProperty("Book's publication date")
+  private Date pubDate;
   @ManyToOne
   @JoinColumn(name = "author_id", referencedColumnName = "id")
   private Author author;
-  @ManyToOne
-  @JoinColumn(name = "genres_id", referencedColumnName = "id")
-  private Genres genres;
+  @Column(name = "is_bestseller")
+  @ApiModelProperty("Value 1 representing a bestseller book, else book is regular, not bestseller")
+  private Integer isBestseller;
+  @ApiModelProperty("Mnemonical identity")
+  private String slug;
+  @ApiModelProperty("Image url")
+  private String image;
+  @ApiModelProperty("Book title")
   private String title;
-  private String priceOld;
-  private String price;
-  private String descriptionShort;
-  private String descriptionRest;
-  private Date dtRelease;
+  @ApiModelProperty("Regular price (without discount)")
+  private Integer price;
+  @ApiModelProperty("Discount in percent min 0%, max 100%")
+  private Integer discount;
+  @Column(columnDefinition = "TEXT")
+  @ApiModelProperty("Book description")
+  private String description;
+  @ManyToOne
+  @JsonManagedReference
+  @JoinColumn(name = "genre_id", referencedColumnName = "id")
+  private Genre genre;
   @OneToOne(mappedBy = "book")
   @PrimaryKeyJoinColumn
+  @JsonIgnore
   private Rating rating;
   @ManyToMany(mappedBy = "bookList")
+  @JsonIgnore
   private List<Tag> tagList = new ArrayList<>();
 
   @Override
@@ -35,11 +58,11 @@ public class Book {
            "id=" + id +
            ", author=" + author +
            ", title='" + title + '\'' +
-           ", priceOld='" + priceOld + '\'' +
+           ", discount='" + discount + '\'' +
            ", price='" + price + '\'' +
-           ", dtRelease=" + dtRelease +
+           ", pubDate=" + pubDate +
            ", rating=" + rating +
-           ", genres=" + genres +
+           ", genres=" + genre +
            '}';
   }
 
@@ -67,19 +90,19 @@ public class Book {
     this.title = title;
   }
 
-  public String getPriceOld() {
-    return priceOld;
+  public Integer getDiscount() {
+    return discount;
   }
 
-  public void setPriceOld(String priceOld) {
-    this.priceOld = priceOld;
+  public void setDiscount(Integer discount) {
+    this.discount = discount;
   }
 
-  public String getPrice() {
+  public Integer getPrice() {
     return price;
   }
 
-  public void setPrice(String price) {
+  public void setPrice(Integer price) {
     this.price = price;
   }
 
@@ -91,36 +114,12 @@ public class Book {
     this.rating = rating;
   }
 
-  public Date getDtRelease() {
-    return dtRelease;
+  public Genre getGenre() {
+    return genre;
   }
 
-  public void setDtRelease(Date dtRelease) {
-    this.dtRelease = dtRelease;
-  }
-
-  public Genres getGenres() {
-    return genres;
-  }
-
-  public void setGenres(Genres genres) {
-    this.genres = genres;
-  }
-
-  public String getDescriptionShort() {
-    return descriptionShort;
-  }
-
-  public void setDescriptionShort(String descriptionShort) {
-    this.descriptionShort = descriptionShort;
-  }
-
-  public String getDescriptionRest() {
-    return descriptionRest;
-  }
-
-  public void setDescriptionRest(String descriptionRest) {
-    this.descriptionRest = descriptionRest;
+  public void setGenre(Genre genres) {
+    this.genre = genres;
   }
 
   public List<Tag> getTagList() {
@@ -130,4 +129,45 @@ public class Book {
   public void setTagList(List<Tag> tagList) {
     this.tagList = tagList;
   }
+
+  public Date getPubDate() {
+    return pubDate;
+  }
+
+  public void setPubDate(Date pubDate) {
+    this.pubDate = pubDate;
+  }
+
+  public Integer getIsBestseller() {
+    return isBestseller;
+  }
+
+  public void setIsBestseller(Integer isBestseller) {
+    this.isBestseller = isBestseller;
+  }
+
+  public String getSlug() {
+    return slug;
+  }
+
+  public void setSlug(String slug) {
+    this.slug = slug;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
 }
