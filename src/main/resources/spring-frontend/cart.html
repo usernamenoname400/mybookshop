@@ -26,22 +26,31 @@ p.error-browser
     <div class="wrap">
       <main class="Middle-main">
         <h1 class="Middle-title" th:text="#{topbar.cart}">Корзина</h1>
+        <h3 style="font-weight: bold; color: #808080" th:if="${isCartEmpty}">Корзина пуста</h3>
         <form class="form Cart" action="#" method="post">
-          <div th:replace="~{fragments/cart_fragments :: cartBooks(${cartBooks})}"></div>
+          <div th:replace="~{fragments/cart_fragments :: cartBooks(${cartBooks}, 'Cart')}"></div>
           <div class="Cart-total">
             <div class="Cart-block Cart-block_total">
               <strong class="Cart-title" th:text="#{cart.total}">Итого:</strong>
               <span
+                      th:if="${#aggregates.sum(cartBooks.![discountedPrice]) != null}"
                       class="Cart-price"
-                      th:text="${'$' + #aggregates.sum(cartBooks.![price - (price * discount / 100)])}"
+                      th:text="${'₽' + #aggregates.sum(cartBooks.![discountedPrice])}"
               >
-                534 р.
+                ₽534
               </span>
               <span
+                      th:if="${#aggregates.sum(cartBooks.![price]) != null}"
                       class="Cart-price_old"
-                      th:text="${'$' + #aggregates.sum(cartBooks.![price])}"
+                      th:text="${'₽' + #aggregates.sum(cartBooks.![price])}"
               >
-                658 р.
+                ₽658
+              </span>
+              <span
+                      th:if="${#aggregates.sum(cartBooks.![discountedPrice]) == null && #aggregates.sum(cartBooks.![price]) == null}"
+                      class="Cart-price"
+              >
+                ₽0
               </span>
             </div>
             <div class="Cart-block">

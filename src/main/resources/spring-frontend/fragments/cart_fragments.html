@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<span th:fragment="cartBooks(books)">
+<span th:fragment="cartBooks(books, type)">
   <div class="Cart-product" th:each="book : ${books}">
     <div class="Cart-block Cart-block_row">
       <div class="Cart-block Cart-block_pict">
-        <a class="Cart-pict" href="#" th:href="${'/books/' + book.id}">
+        <a class="Cart-pict" href="#" th:href="${'/books/' + book.slug}">
           <img class="Cart-img" src="/assets/img/content/main/card.jpg" th:src="${book.image}" alt="card.jpg"/>
         </a>
       </div>
@@ -14,7 +14,7 @@
           <div class="Cart-author">
             <a href="#" th:href="${'/authors/' + book.author.id}" th:text="${book.author.name}">Борис Васильевич Бедный</a>
           </div>
-          <div class="Cart-title"><a href="#" th:href="${'/books/' + book.id}" th:text="${book.title}">Жизнь</a></div>
+          <div class="Cart-title"><a href="#" th:href="${'/books/' + book.slug}" th:text="${book.title}">Жизнь</a></div>
           <div class="Cart-rating">
             <span class="Rating">
               <span th:replace="~{fragments/book_fragments :: intStars(${book.rating.ratingAvg})}"></span>
@@ -22,15 +22,36 @@
           </div>
           <div class="Cart-buttons">
             <div class="Cart-btn">
-              <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1122]">
+              <button
+                      th:if="${type != 'Postpone'}"
+                      class="btn btn_primary btn_outline"
+                      data-sendstatus="KEPT"
+                      th:data-bookid="${'postpone/' + book.slug}"
+                      data-bookid="[1122]"
+              >
                 <span class="btn-icon">
                   <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
                 </span>
-                <span class="btn-content" th:text="#{cartbook.bookmark}">Отложить</span>
+                <span class="btn-content" th:text="#{buttons.postpone}">Отложить</span>
+              </button>
+              <button
+                      th:if="${type != 'Cart'}"
+                      class="btn btn_primary btn_outline"
+                      data-sendstatus="CART"
+                      th:data-bookid="${'addCart/' + book.slug}"
+                      data-bookid="[1122]"
+              >
+                <span class="btn-icon"><img src="/assets/img/icons/shopping-basket.svg" alt="shopping-basket.svg"/></span>
+                <span class="btn-content" th:text="#{buttons.tocart}">Купить</span>
               </button>
             </div>
             <div class="Cart-btn">
-              <button class="btn btn_danger btn_outline" data-sendstatus="UNLINK" data-bookid="[1122]">
+              <button
+                      class="btn btn_danger btn_outline"
+                      data-sendstatus="UNLINK"
+                      th:data-bookid="${'remove' + type + '/' + book.slug}"
+                      data-bookid="[1122]"
+              >
                 <span class="btn-icon">
                   <img src="/assets/img/icons/trash.svg" alt="trash.svg"/>
                 </span>
@@ -42,13 +63,9 @@
         <div class="Cart-block Cart-block_price">
           <div th:text="${price}"></div>
           <div class="Cart-priceTitle" th:text="#{cartbook.price}">Цена:</div>
-          <div class="Cart-price Cart-price_old" th:text="${book.price - (book.price * book.discount / 100)}">254 р.</div>
-          <div class="Cart-price" th:text="${book.price}">180 р.</div>
-          <div
-                  class="Cart-sale"
-                  th:text="${book.discount + '%'}">
-            -30%
-          </div>
+          <div class="Cart-price Cart-price_old" th:text="${book.price}">254 р.</div>
+          <div class="Cart-price" th:text="${book.discountedPrice}">180 р.</div>
+          <div class="Cart-sale" th:text="${'-' + book.discount + '%'}">-30%</div>
         </div>
       </div>
     </div>

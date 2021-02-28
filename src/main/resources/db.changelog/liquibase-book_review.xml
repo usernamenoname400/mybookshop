@@ -1,0 +1,30 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.10.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+  <changeSet author="somebody" id="add book_review table">
+    <createTable tableName="book_review">
+      <column name="id" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="book_review_pkey"/>
+      </column>
+      <column name="book_id" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+      <column name="user_id" type="INTEGER"/>
+      <column name="session_id" type="VARCHAR(255)"/>
+      <column name="user_name" type="VARCHAR2(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="time" type="DATETIME">
+        <constraints nullable="false"/>
+      </column>
+      <column name="text" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="somebody" id="book_review2book_fk">
+    <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_review" constraintName="book_review2book_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book" validate="true"/>
+  </changeSet>
+  <changeSet author="somebody" id="book_review_id_seq">
+    <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="book_review_id_seq" startValue="1"/>
+  </changeSet>
+</databaseChangeLog>

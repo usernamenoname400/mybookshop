@@ -26,8 +26,9 @@
     <div class="wrap">
       <main class="Middle-main">
         <h1 class="Middle-title" th:text="#{topbar.postponed}">Отложенное</h1>
+        <h3 style="font-weight: bold; color: #808080" th:if="${isPostponedEmpty}">Нет отложенных книг</h3>
         <form class="form Cart Cart_postponed" action="#" method="post">
-          <div th:replace="~{fragments/cart_fragments :: cartBooks(${postponedBooks})}"></div>
+          <div th:replace="~{fragments/cart_fragments :: cartBooks(${postponedBooks}, 'Postpone')}"></div>
           <div class="Cart-total">
             <div class="Cart-block Cart-block_total">
             </div>
@@ -35,7 +36,7 @@
               <button
                       class="btn btn_success btn_md Cart-buyAll"
                       data-sendstatus="CART"
-                      data-bookid="[1111, 1122, 1133]"
+                      data-bookid="buyAll"
                       th:text="#{postponed.buyall}"
               >
                 Купить все

@@ -4,29 +4,28 @@
 <div class="Cards Cards_refresh" th:fragment="cardsFragment (books, savePath)">
     <div class="Card" th:each="book : ${books}">
         <div class="Card-picture">
-            <a href="#" th:if="${!savePath}" th:href="|@{/books/}${book.id}|">
+            <a href="#" th:if="${!savePath}" th:href="|@{/books/}${book.slug}|">
                 <img src="/assets/img/content/main/card.jpg" th:src="${book.image}" alt="card.jpg"/>
             </a>
-            <a href="#" th:if="${savePath}" th:href="${#httpServletRequest.requestURI + '/' + book.id}">
+            <a href="#" th:if="${savePath}" th:href="${#httpServletRequest.requestURI + '/' + book.slug}">
                 <img src="/assets/img/content/main/card.jpg" th:src="${book.image}" alt="card.jpg"/>
             </a>
         </div>
         <div class="Card-content">
             <strong class="Card-title">
-                <a href="#" th:if="${!savePath}" th:href="|@{/books/}${book.id}|" th:text="${book.title}">
+                <a href="#" th:if="${!savePath}" th:href="|@{/books/}${book.slug}|" th:text="${book.title}">
                     Техника
                 </a>
-                <a href="#" th:if="${savePath}" th:href="${#httpServletRequest.requestURI + '/' + book.id}" th:text="${book.title}">
+                <a href="#" th:if="${savePath}" th:href="${#httpServletRequest.requestURI + '/' + book.slug}" th:text="${book.title}">
                     Техника
                 </a>
             </strong>
-            <div th:text="${book.author}"/>
             <div class="Card-description">
                 <a th:href="|@{/authors/}${book.author.id}|" th:text="${book.author.name}">Кондратенко Александр Петрович</a>
             </div>
             <div class="Card-cost">
-                <span class="Card-priceOld" th:text="${book.price}">₽300.00</span>
-                <span class="Card-price" th:text="${book.price - (book.price * book.discount / 100)}">₽190.00</span>
+                <span class="Card-priceOld" th:text="${'₽' + book.price}">₽300.00</span>
+                <span class="Card-price" th:text="${'₽' + book.discountedPrice}">₽190.00</span>
             </div>
         </div>
     </div>

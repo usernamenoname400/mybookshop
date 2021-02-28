@@ -15,6 +15,10 @@
   <include file="db.changelog/liquibase-tag-data.sql"/>
   <include file="db.changelog/liquibase-book-data.sql"/>
   <include file="db.changelog/liquibase-ratings-data.sql"/>
-  <include file="db.changelog/liqibase-book2tag-data.sql"/>
+  <include file="db.changelog/liquibase-book2tag-data.sql"/>
+  <include file="db.changelog/liquibase-book_file.xml"/>
+  <include file="db.changelog/liquibase-book_file-data.sql"/>
+  <include file="db.changelog/liquibase-book_review.xml"/>
+  <include file="db.changelog/liquibase-book_review-data.sql"/>
 
 </databaseChangeLog>

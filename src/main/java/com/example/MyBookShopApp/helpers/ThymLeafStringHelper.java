@@ -30,4 +30,8 @@ public class ThymLeafStringHelper {
 
     return text.substring(i + 1);
   }
+
+  public Boolean hasSuffix(String text, int startPos) {
+    return text == null || text.length() > startPos;
+  }
 }

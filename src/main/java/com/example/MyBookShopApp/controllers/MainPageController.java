@@ -1,6 +1,8 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.*;
+import com.example.MyBookShopApp.data.dto.BooksPageDTO;
+import com.example.MyBookShopApp.data.service.BookService;
+import com.example.MyBookShopApp.data.service.TagService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

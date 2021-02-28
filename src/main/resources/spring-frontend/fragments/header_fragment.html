@@ -46,6 +46,7 @@
                             </form>
                         </div>
                     </div>
+                    <div th:if="${searchError}" th:text="${searchError.getLocalizedMessage()}" style="color: red; font-weight: bold;"></div>
                 </div>
                 <div class="row-block Header-cart">
                     <div class="CartBlock">
