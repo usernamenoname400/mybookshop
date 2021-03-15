@@ -20,5 +20,7 @@
   <include file="db.changelog/liquibase-book_file-data.sql"/>
   <include file="db.changelog/liquibase-book_review.xml"/>
   <include file="db.changelog/liquibase-book_review-data.sql"/>
+  <include file="db.changelog/liquibase-users.xml"/>
+  <include file="db.changelog/liquibase-token_blacklist.xml"/>
 
 </databaseChangeLog>

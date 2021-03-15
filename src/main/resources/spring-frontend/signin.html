@@ -34,7 +34,10 @@ p.error-browser
           <div class="Login-ins">
             <div class="Login-step">
               <div class="form-group">
-                <label class="form-label Login-title" th:text="#{signin.greeter}">Введите e-mail или телефон </label>
+                <label class="form-label Login-title">
+                  <span th:text="#{signin.greeter}">Введите e-mail или телефон</span><br/>
+                  <span th:if="${regOk}">Регистрация прошла успешно!</span>
+                </label>
               </div>
               <div class="form-group">
                 <div class="row">
@@ -120,8 +123,8 @@ p.error-browser
             </div>
             <div class="Login-step Login-step_hide" data-type="mail">
               <div class="form-group">
-                <label class="form-label Login-title" th:text="#{signin.email_sent}">
-                  На&nbsp;Ваш e-mail отправлена ссылка для входа и&nbsp;код. Перейдите по&nbsp;ссылке или введите код ниже:
+                <label class="form-label Login-title">
+                  Введите пароль учетной записи или перейдите по ссылке ниже для регистрации:
                 </label>
               </div>
               <div class="form-group form-group_key">
@@ -133,7 +136,6 @@ p.error-browser
                         placeholder="Код"
                         th:placeholder="#{signin.code}"
                         data-validate="key require"
-                        data-mask="999 999"
                 />
               </div>
               <div class="form-group form-group_center">
@@ -151,6 +153,11 @@ p.error-browser
             <div class="form-group form-group_center">
               <a class="Login-reg" href="/signup.html" th:href="@{/signup}" th:text="#{signin.register}">
                 Зарегистрироваться
+              </a>
+            </div>
+            <div class="form-group form-group_center">
+              <a class="Login-reg" th:href="@{/oauth2/authorization/facebook}" >
+                Войти с учеткой facebook
               </a>
             </div>
           </div>

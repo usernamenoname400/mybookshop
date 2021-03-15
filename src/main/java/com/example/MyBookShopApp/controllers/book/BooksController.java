@@ -8,12 +8,16 @@ import com.example.MyBookShopApp.data.service.BookService;
 import com.example.MyBookShopApp.data.service.RatingService;
 import com.example.MyBookShopApp.data.service.ResourceStorage;
 import com.example.MyBookShopApp.helpers.ThymLeafStringHelper;
+import com.example.MyBookShopApp.security.BookStoreUserRegister;
+import com.example.MyBookShopApp.security.BookstoreUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,18 +35,21 @@ public class BooksController {
   private final BookReviewService bookReviewService;
   private final RatingService ratingService;
   private final ResourceStorage storage;
+  private final BookStoreUserRegister bookStoreUserRegister;
 
   @Autowired
   public BooksController(
       BookService bookService,
       ResourceStorage storage,
       BookReviewService bookReviewService,
-      RatingService ratingService
+      RatingService ratingService,
+      BookStoreUserRegister bookStoreUserRegister
   ) {
     this.bookService = bookService;
     this.storage = storage;
     this.bookReviewService = bookReviewService;
     this.ratingService = ratingService;
+    this.bookStoreUserRegister = bookStoreUserRegister;
   }
 
   @GetMapping("/books/{slug}")
@@ -60,6 +67,7 @@ public class BooksController {
     model.addAttribute("stringHelper", new ThymLeafStringHelper());
     model.addAttribute("isPostponed", (postponedContents != null && postponedContents.contains(slug)));
     model.addAttribute("isInCart", (cartContents != null && cartContents.contains(slug)));
+    model.addAttribute("curUsr", bookStoreUserRegister.getCurrentUser());
     return "books/slug";
   }
 
@@ -75,11 +83,20 @@ public class BooksController {
 
   @PostMapping("/books/{slug}/addReview")
   public String addReview(
-      @RequestParam("reviewAuthor") String reviewAuthor,
       @RequestParam("reviewText") String reviewText,
       @PathVariable("slug") String slug,
       @CookieValue(value = "JSESSIONID", required = true) String sessionId
   ) {
+    String reviewAuthor = null;
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal != null && principal instanceof BookstoreUserDetails) {
+      reviewAuthor = ((BookstoreUserDetails)principal).getBookstoreUser().getName();
+    } else if (principal != null && principal instanceof DefaultOAuth2User) {
+      reviewAuthor = (String)((DefaultOAuth2User)principal).getAttributes().get("name");
+    } else {
+      throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized");
+    }
+
     Book book = bookService.getBookBySlug(slug);
     if (book == null) {
       Logger.getLogger(this.getClass().getSimpleName()).warning("Book `" + slug + "` not found");

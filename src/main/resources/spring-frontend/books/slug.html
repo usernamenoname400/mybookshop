@@ -212,6 +212,8 @@ p.error-browser
                       class="Spoiler-trigger btn btn_primary btn_nr"
                       type="button"
                       id="reviewWindow"
+                      th:disabled="${curUsr == null}"
+                      th:text='${curUsr == null ? "Зарегистрируйтесь, чтобы оставить отзыв" : "Оставить отзыв"}'
               >
                 Оставить отзыв
               </button>
@@ -220,9 +222,6 @@ p.error-browser
 
           <div id="reviewPopup">
             <form id="reviewForm" method="POST" th:action="|@{/books/}${book.slug + '/addReview'}|">
-              <div>
-                <span>Ваше имя</span><input id="reviewAuthor" name="reviewAuthor" type="text"/>
-              </div>
               <div>
                 <span>Ваш отзыв</span><textarea id="reviewText" name="reviewText" type="text"></textarea>
               </div>
